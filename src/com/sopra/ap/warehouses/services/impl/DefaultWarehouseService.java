@@ -8,11 +8,8 @@ import com.sopra.ap.warehouses.services.WarehouseService;
 public class DefaultWarehouseService implements WarehouseService{
 	private WarehouseDAO warehouseDAO;
 
-	public DefaultWarehouseService(WarehouseDAO warehouseDAO) {
-		this.warehouseDAO=new DefaultWarehouseDAO();
-	}
-
 	public DefaultWarehouseService() {
+		this.warehouseDAO=new DefaultWarehouseDAO();
 	}
 
 	public List<WarehouseModel> getAll(){

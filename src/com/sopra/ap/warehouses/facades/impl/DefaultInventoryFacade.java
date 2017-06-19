@@ -13,12 +13,11 @@ import com.sopra.ap.warehouses.services.impl.DefaultInventoryService;
 public class DefaultInventoryFacade implements InventoryFacade{
 
 	private InventoryService inventoryService;
-
-	public DefaultInventoryFacade(InventoryService inventoryService) {
-		this.inventoryService=new DefaultInventoryService();
-	}
+	private InventoryModel inventoryModel;
 
 	public DefaultInventoryFacade() {
+		this.inventoryService=new DefaultInventoryService();
+		this.inventoryModel=new InventoryModel();
 	}
 	
 	public List<InventoryData> getAll() {
@@ -64,4 +63,21 @@ public class DefaultInventoryFacade implements InventoryFacade{
 		}
 		return false;
 	}
+
+	public InventoryService getInventoryService() {
+		return inventoryService;
+	}
+
+	public void setInventoryService(InventoryService inventoryService) {
+		this.inventoryService = inventoryService;
+	}
+
+	public InventoryModel getInventoryModel() {
+		return inventoryModel;
+	}
+
+	public void setInventoryModel(InventoryModel inventoryModel) {
+		this.inventoryModel = inventoryModel;
+	}
+	
 }

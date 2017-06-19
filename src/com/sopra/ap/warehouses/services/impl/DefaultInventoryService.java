@@ -12,11 +12,8 @@ public class DefaultInventoryService implements InventoryService{
 	
 	private InventoryDAO inventoryDAO;
 	
-	public DefaultInventoryService(InventoryDAO inventoryDAO) {
-		this.inventoryDAO=new DefaultInventoryDAO();
-	}
-	
 	public DefaultInventoryService() {
+		this.inventoryDAO=new DefaultInventoryDAO();
 	}
 	
 	public List<InventoryModel> getAll(){

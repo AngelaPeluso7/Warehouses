@@ -13,12 +13,11 @@ import com.sopra.ap.warehouses.services.impl.DefaultConsignementService;
 public class DefaultConsignementFacade implements ConsignementFacade {
 	
 	private ConsignementService consignementService;
+	private ConsignementModel consignementModel;
 	
-	public DefaultConsignementFacade(ConsignementService consignementService) {
-		this.consignementService=new DefaultConsignementService();
-	}
-
 	public DefaultConsignementFacade() {
+		this.consignementService=new DefaultConsignementService();
+		this.consignementModel=new ConsignementModel();
 	}
 	
 	public List<ConsignementData> getAll() {
@@ -58,6 +57,22 @@ public class DefaultConsignementFacade implements ConsignementFacade {
 			throw new IllegalArgumentException("Consignement not found.");
 		}
 		return result;
+	}
+
+	public ConsignementService getConsignementService() {
+		return consignementService;
+	}
+
+	public void setConsignementService(ConsignementService consignementService) {
+		this.consignementService = consignementService;
+	}
+
+	public ConsignementModel getConsignementModel() {
+		return consignementModel;
+	}
+
+	public void setConsignementModel(ConsignementModel consignementModel) {
+		this.consignementModel = consignementModel;
 	}
 
 }

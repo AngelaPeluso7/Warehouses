@@ -11,11 +11,8 @@ public class DefaultConsignementService implements ConsignementService {
 
 	private ConsignementDAO consignementDAO;
 	
-	public DefaultConsignementService(ConsignementDAO consignementDAO) {
-		this.consignementDAO=new DefaultConsignementDAO();
-	}
-	
 	public DefaultConsignementService() {
+		this.consignementDAO=new DefaultConsignementDAO();
 	}
 	
 	public List<ConsignementModel> getAll() {

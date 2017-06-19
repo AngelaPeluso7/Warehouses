@@ -13,14 +13,13 @@ import com.sopra.ap.warehouses.services.impl.DefaultInvoiceService;
 public class DefaultInvoiceFacade implements InvoiceFacade{
 	
 	private InvoiceService invoiceService;
+	private InvoiceModel invoiceModel;
 	
-	public DefaultInvoiceFacade(InvoiceService invoiceService) {
+	public DefaultInvoiceFacade() {
 		this.invoiceService=new DefaultInvoiceService();
+		this.invoiceModel=new InvoiceModel();
 	}
 
-	public DefaultInvoiceFacade() {
-	}
-	
 	public List<InvoiceData> getAll(){
 		List<InvoiceModel> invoicesModel = invoiceService.getAll();
 		final List<InvoiceData> invoicesData = new ArrayList<InvoiceData>();
@@ -59,4 +58,21 @@ public class DefaultInvoiceFacade implements InvoiceFacade{
 		}
 		return result;
 	}
+
+	public InvoiceService getInvoiceService() {
+		return invoiceService;
+	}
+
+	public void setInvoiceService(InvoiceService invoiceService) {
+		this.invoiceService = invoiceService;
+	}
+
+	public InvoiceModel getInvoiceModel() {
+		return invoiceModel;
+	}
+
+	public void setInvoiceModel(InvoiceModel invoiceModel) {
+		this.invoiceModel = invoiceModel;
+	}
+	
 }

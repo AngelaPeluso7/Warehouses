@@ -11,11 +11,8 @@ public class DefaultInvoiceService implements InvoiceService {
 	
 	private InvoiceDAO invoiceDAO;
 	
-	public DefaultInvoiceService(InvoiceDAO invoiceDAO) {
-		this.invoiceDAO=new DefaultInvoiceDAO();
-	}
-	
 	public DefaultInvoiceService() {
+		this.invoiceDAO=new DefaultInvoiceDAO();
 	}
 	
 	public List<InvoiceModel> getAll() {

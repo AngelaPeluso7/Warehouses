@@ -10,13 +10,10 @@ import com.sopra.ap.warehouses.services.OrderService;
 public class DefaultOrderService implements OrderService {
 	private OrderDAO orderDAO;
 	
-	public DefaultOrderService(OrderDAO orderDAO) {
+	public DefaultOrderService() {
 		this.orderDAO=new DefaultOrderDAO();
 	}
 
-	public DefaultOrderService() {
-	}
-	
 	public List<OrderModel> getAll() {
 		return orderDAO.findAll();
 	}

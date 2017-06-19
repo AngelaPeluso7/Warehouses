@@ -11,14 +11,13 @@ import com.sopra.ap.warehouses.services.impl.DefaultOrderService;
 
 public class DefaultOrderFacade implements OrderFacade {
 	private OrderService orderService;
+	private OrderModel orderModel;
 	
-	public DefaultOrderFacade(OrderService orderService) {
+	public DefaultOrderFacade() {
 		this.orderService=new DefaultOrderService();
+		this.orderModel=new OrderModel();
 	}
 
-	public DefaultOrderFacade() {
-	}
-	
 	public List<OrderData> getAll() {
 		List<OrderModel> ordersModel = orderService.getAll();
 		final List<OrderData> ordersData = new ArrayList<OrderData>();
@@ -62,6 +61,22 @@ public class DefaultOrderFacade implements OrderFacade {
 			throw new IllegalArgumentException("Order not found.");
 		}
 		return result;
+	}
+
+	public OrderService getOrderService() {
+		return orderService;
+	}
+
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
+	}
+
+	public OrderModel getOrderModel() {
+		return orderModel;
+	}
+
+	public void setOrderModel(OrderModel orderModel) {
+		this.orderModel = orderModel;
 	}
 
 }

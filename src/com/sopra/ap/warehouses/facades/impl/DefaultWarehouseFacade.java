@@ -12,12 +12,11 @@ import com.sopra.ap.warehouses.services.impl.DefaultWarehouseService;
 public class DefaultWarehouseFacade implements WarehouseFacade{
 	
 	private WarehouseService warehouseService;
+	private WarehouseModel warehouseModel;
 	
-	public DefaultWarehouseFacade(WarehouseService warehouseService) {
-		this.warehouseService=new DefaultWarehouseService();
-	}
-
 	public DefaultWarehouseFacade() {
+		this.warehouseService=new DefaultWarehouseService();
+		this.warehouseModel=new WarehouseModel();
 	}
 
 	public List<WarehouseData> getAll(){
@@ -39,4 +38,21 @@ public class DefaultWarehouseFacade implements WarehouseFacade{
         warehouseData.setMaxSize(warehouseModel.getMaxSize());
         return warehouseData;
 	}
+
+	public WarehouseService getWarehouseService() {
+		return warehouseService;
+	}
+
+	public void setWarehouseService(WarehouseService warehouseService) {
+		this.warehouseService = warehouseService;
+	}
+
+	public WarehouseModel getWarehouseModel() {
+		return warehouseModel;
+	}
+
+	public void setWarehouseModel(WarehouseModel warehouseModel) {
+		this.warehouseModel = warehouseModel;
+	}
+	
 }
