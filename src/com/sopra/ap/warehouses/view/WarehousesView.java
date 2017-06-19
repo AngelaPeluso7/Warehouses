@@ -32,6 +32,16 @@ public class WarehousesView {
 	private static ConsignementData consignementData;
 
 	public static void main(String[] args) {
+		// Loading Warehouse DB
+		warehouseData = new WarehouseData();
+		warehouseController = new WarehouseController();
+		List<WarehouseData> warehouses = new ArrayList<WarehouseData>();
+		warehouses = warehouseController.getAll();
+		for(int i = 0; i < warehouses.size(); i++) {
+		    System.out.print("Warehouse: "+warehouses.get(i).getIdWarehouse()+" ");
+		    System.out.println("MaxSize: "+warehouses.get(i).getMaxSize());
+		}
+		
 		Scanner scan = new Scanner(System.in);
 		String choise;
 		String menu = "***Warehouses*** SCEGLI L'OPERAZIONE DA ESEGUIRE E INSERISCI IL NUMERO CORRISPONDENTE:\n"
@@ -44,26 +54,19 @@ public class WarehousesView {
 				case 1: {
 					System.out.println("***Genera Nuovo Ordine***");
 					
-					// Loading Warehouse DB
-					warehouseData = new WarehouseData();
-					warehouseController = new WarehouseController();
-					List<WarehouseData> warehouses = new ArrayList<WarehouseData>();
-					warehouses = warehouseController.getAll();
-					for(int i = 0; i < warehouses.size(); i++) {
-					    System.out.print("Warehouse: "+warehouses.get(i).getIdWarehouse()+" ");
-					    System.out.println("MaxSize: "+warehouses.get(i).getMaxSize());
-					}
 					// Loading Order DB
 					orderData = new OrderData();
 					orderController = new OrderController();
 					List<OrderData> orders = new ArrayList<OrderData>();
 					orders = orderController.getAll();
+					int idOrder=orders.size();
 
 					// Loading Invoice DB
 					invoiceData = new InvoiceData();
 					invoiceController = new InvoiceController();
 					List<InvoiceData> invoices = new ArrayList<InvoiceData>();
 					invoices = invoiceController.getAll();
+					int idInvoice=invoices.size()+1;
 
 					// Loading Inventory DB
 					inventoryData = new InventoryData();
@@ -116,51 +119,82 @@ public class WarehousesView {
 							stateConsignement2=StateConsignement.UNAVAIABLE;
 							System.out.println("Il prodotto "+typeProduct2+" NON è presente in nessuna Warehouse ");
 						}
+						System.out.println("");
 					
 						//Creating 2 Consignements 
 						int idConsignement1=idConsignement+1;
 						idConsignement++;
-						ConsignementData consignementData1=new ConsignementData(idConsignement1,warehouseFound1,typeProduct1.toString(),stateConsignement1.toString());
-						consignementController.newConsignement(consignementData1);
+						ConsignementData consignementData1=new ConsignementData(idConsignement1,warehouseFound1,typeProduct1.name(),stateConsignement1.name());
+						if(consignementController.newConsignement(consignementData1)){
+							System.out.println("La consignement 1 è stata creata");
+						}
 						//System.out.println(consignementController.newConsignementEsit(consignementData1));//Cannot add or update a child row: a foreign key constraint fails (`warehouses`.`consignement`, CONSTRAINT `consignement_ibfk_1` FOREIGN KEY (`idWarehouse`) REFERENCES `inventory` (`idWarehouse`))
 						consignements.add(consignementData1);
 						int idConsignement2=idConsignement+1;
 						idConsignement++;
-						ConsignementData consignementData2=new ConsignementData(idConsignement1,warehouseFound2,typeProduct2.toString(),stateConsignement2.toString());
-						consignementController.newConsignement(consignementData2);
+						ConsignementData consignementData2=new ConsignementData(idConsignement2,warehouseFound2,typeProduct2.name(),stateConsignement2.name());
+						if(consignementController.newConsignement(consignementData2)){
+							System.out.println("La consignement 2 è stata creata");
+							System.out.println("");
+						}
 						consignements.add(consignementData2);
 						//System.out.println(consignementController.newConsignementEsit(consignementData2));
-					
+						for(int i = consignements.size()-2; i < consignements.size(); i++) {
+						    System.out.print("Consignement: "+consignements.get(i).getIdConsignement()+" ");
+						    System.out.print("Warehouse: "+consignements.get(i).getWarehouse()+" ");
+						    System.out.print("Type Product: "+consignements.get(i).getTypeProduct()+" ");
+						    System.out.println("State Consignement: "+consignements.get(i).getStateConsignement()+" ");
+						}
+						System.out.println("");
+						
 						//Creating order
-						int idOrder=orders.size()+1;
-						OrderData orderData=new OrderData(idOrder,typeProduct1.toString(),idConsignement1,typeProduct2.toString(),idConsignement2);
-						orderController.newOrder(orderData);
-						System.out.println(orderController.newOrderEsit(orderData));
+						idOrder++;
+						OrderData orderData=new OrderData(idOrder,typeProduct1.name(),idConsignement1,typeProduct2.name(),idConsignement2);
+						if(orderController.newOrder(orderData)){
+							System.out.println("L'ordine è stato creato:");
+						}
+						//System.out.println(orderController.newOrderEsit(orderData));
 						orders.add(orderData);
+						for(int i = orders.size()-1; i < orders.size(); i++) {
+						    System.out.print("Order: "+orders.get(i).getIdOrder()+" ");
+						    System.out.print("Type Product 1: "+orders.get(i).getTypeProduct1()+" ");
+						    System.out.print("Consignement 1: "+orders.get(i).getConsignement1()+" ");
+						    System.out.print("Type Product 2: "+orders.get(i).getTypeProduct2()+" ");
+						    System.out.println("Consignement 2: "+orders.get(i).getConsignement2()+" ");
+						}
+						System.out.println("");
+						
 					
 						//Creating invoice
-						int idInvoice=invoices.size()+1;
-						StateOrder stateOrder;
-						if(stateConsignement1.equals("AVAIABLE") && stateConsignement2.equals("AVAIABLE")){
+						StateOrder stateOrder=null;
+						if((stateConsignement1.name()).equals("AVAIABLE") && (stateConsignement2.name()).equals("AVAIABLE")){
 							stateOrder=StateOrder.SHIPPED;
 						}
 						else  {
 							stateOrder=StateOrder.CANCELED;
 						}
-						InvoiceData invoiceData=new InvoiceData(idInvoice,idOrder,stateOrder.toString());
-						invoiceController.newInvoice(invoiceData);
-						System.out.println(invoiceController.newInvoiceEsit(invoiceData));
+						InvoiceData invoiceData=new InvoiceData(idInvoice,idOrder,stateOrder.name());
+						if(invoiceController.newInvoice(invoiceData)){
+							System.out.println("L'invoice è stato creato:");
+						}
+						//System.out.println(invoiceController.newInvoiceEsit(invoiceData));
 						invoices.add(invoiceData);
+						for(int i = invoices.size()-1; i < invoices.size(); i++) {
+						    System.out.print("Invoice: "+invoices.get(i).getIdInvoice()+" ");
+						    System.out.print("Order: "+invoices.get(i).getIdInvoice()+" ");
+						    System.out.println("Sate Order: "+invoices.get(i).getStateOrder()+" ");
+						}
+						System.out.println("");
+						idInvoice++;
 						
 						//Decrementing quantities in inventory if they are avaiable
-						if(stateConsignement1.equals("AVAIABLE") && stateConsignement2.equals("AVAIABLE")){
-						
-							inventoryController.decrementQuantity(typeProduct1.toString(), warehouseFound1);
-							inventoryController.decrementQuantityShow(typeProduct1.toString(), warehouseFound1);
-						
-							inventoryController.decrementQuantity(typeProduct2.toString(), warehouseFound2);
-							inventoryController.decrementQuantityShow(typeProduct2.toString(), warehouseFound2);
+						if((stateConsignement1.name()).equals("AVAIABLE") && (stateConsignement2.name()).equals("AVAIABLE")){
+							if (inventoryController.decrementQuantity(typeProduct1.name(), warehouseFound1))
+							System.out.println("Il prodotto "+typeProduct1+" è stato decrementato nell'inventario del warehouse "+warehouseFound1);
+							if (inventoryController.decrementQuantity(typeProduct2.name(), warehouseFound2))
+								System.out.println("Il prodotto "+typeProduct2+" è stato decrementato nell'inventario del warehouse "+warehouseFound2);
 						}
+						System.out.println("");
 					}
 				
 				
@@ -173,7 +207,7 @@ public class WarehousesView {
 					break;
 				}
 			} else {
-				System.out.println("ERROR!!!\n");
+				System.out.println("INSERT ERROR!!!\n");
 			}
 		}while(Integer.parseInt(choise)!=2);System.out.println("Arrivederci!");scan.close();
 

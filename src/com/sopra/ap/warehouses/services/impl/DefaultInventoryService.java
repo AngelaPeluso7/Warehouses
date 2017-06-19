@@ -29,6 +29,6 @@ public class DefaultInventoryService implements InventoryService{
 	}
 	
 	public boolean decrementQuantity(TypeProduct typeProduct,int idWarehouse){
-		return inventoryDAO.searchProduct(typeProduct, idWarehouse);
+		return inventoryDAO.decrementQuantity(typeProduct, idWarehouse);
 	}
 }

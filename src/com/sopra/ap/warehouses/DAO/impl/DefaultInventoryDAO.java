@@ -85,11 +85,11 @@ public class DefaultInventoryDAO implements InventoryDAO {
 		Connection conn=null;
 		try {
 			conn=connection();
-			String insert = "UPDATE Inventory SET Inventory.quantity=Inventory.quantity-1 "
+			String insert = "UPDATE Inventory SET Inventory.quantity=(Inventory.quantity)-1 "
 					+ "WHERE Inventory.idWarehouse=? AND Inventory.typeProduct=?; ";
 			PreparedStatement stmt = conn.prepareStatement(insert);
-			stmt.setString(1, typeProduct.toString());
-			stmt.setString(2, Integer.toString(idWarehouse));
+			stmt.setInt(1,idWarehouse);
+			stmt.setString(2, typeProduct.toString());
 			if (stmt.executeUpdate() > 0) {
 				return true;
 			}

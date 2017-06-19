@@ -70,7 +70,7 @@ public class DefaultInvoiceDAO implements InvoiceDAO {
 		Connection conn=null;
 		try {
 			conn=connection();
-			String insert = "INSERT INTO Invoice(idInvoice,idOrder,state) VALUES (?,?,?,?) ; ";
+			String insert = "INSERT INTO Invoice(idInvoice,idOrder,state) VALUES (?,?,?) ; ";
 			PreparedStatement stmt = conn.prepareStatement(insert);
 			stmt.setInt(1, invoiceModel.getIdInvoice());
 			stmt.setInt(2,invoiceModel.getOrder());
