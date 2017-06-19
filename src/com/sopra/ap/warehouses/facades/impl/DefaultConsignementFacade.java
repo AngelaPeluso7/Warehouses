@@ -7,6 +7,7 @@ import com.sopra.ap.warehouses.data.ConsignementData;
 import com.sopra.ap.warehouses.facades.ConsignementFacade;
 import com.sopra.ap.warehouses.models.ConsignementModel;
 import com.sopra.ap.warehouses.models.StateConsignement;
+import com.sopra.ap.warehouses.models.TypeProduct;
 import com.sopra.ap.warehouses.services.ConsignementService;
 import com.sopra.ap.warehouses.services.impl.DefaultConsignementService;
 
@@ -48,7 +49,8 @@ public class DefaultConsignementFacade implements ConsignementFacade {
 		{
 			ConsignementModel consignementModel=new ConsignementModel();
 			consignementModel.setIdConsignement(consignementData.getIdConsignement());
-			consignementModel.setWarehouse(consignementData.getIdConsignement());
+			consignementModel.setWarehouse(consignementData.getWarehouse());
+			consignementModel.setTypeProduct(TypeProduct.valueOf(consignementData.getTypeProduct()));
 			consignementModel.setStateConsignement(StateConsignement.valueOf(consignementData.getStateConsignement()));
 			result = consignementService.newConsignement(consignementModel);
 		}

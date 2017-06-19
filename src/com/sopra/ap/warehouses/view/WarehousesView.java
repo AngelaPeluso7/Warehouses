@@ -76,6 +76,7 @@ public class WarehousesView {
 					consignementController = new ConsignementController();
 					List<ConsignementData> consignements = new ArrayList<ConsignementData>();
 					consignements = consignementController.getAll();
+					int idConsignement=consignements.size();
 					
 					//Generating casual Order
 					TypeProduct typeProduct1 = TypeProduct.values()[(int)(Math.random()*(TypeProduct.values().length))];
@@ -117,17 +118,18 @@ public class WarehousesView {
 						}
 					
 						//Creating 2 Consignements 
-						int idConsignement1=consignements.size()+1;
-						System.out.println(idConsignement1+warehouseFound1+typeProduct1.toString()+stateConsignement1.toString());
+						int idConsignement1=idConsignement+1;
+						idConsignement++;
 						ConsignementData consignementData1=new ConsignementData(idConsignement1,warehouseFound1,typeProduct1.toString(),stateConsignement1.toString());
 						consignementController.newConsignement(consignementData1);
-						System.out.println(consignementController.newConsignementEsit(consignementData1));
+						//System.out.println(consignementController.newConsignementEsit(consignementData1));//Cannot add or update a child row: a foreign key constraint fails (`warehouses`.`consignement`, CONSTRAINT `consignement_ibfk_1` FOREIGN KEY (`idWarehouse`) REFERENCES `inventory` (`idWarehouse`))
 						consignements.add(consignementData1);
-						int idConsignement2=consignements.size()+1;
+						int idConsignement2=idConsignement+1;
+						idConsignement++;
 						ConsignementData consignementData2=new ConsignementData(idConsignement1,warehouseFound2,typeProduct2.toString(),stateConsignement2.toString());
 						consignementController.newConsignement(consignementData2);
 						consignements.add(consignementData2);
-						System.out.println(consignementController.newConsignementEsit(consignementData2));
+						//System.out.println(consignementController.newConsignementEsit(consignementData2));
 					
 						//Creating order
 						int idOrder=orders.size()+1;
