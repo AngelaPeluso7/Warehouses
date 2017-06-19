@@ -16,6 +16,7 @@ public class Management {
 		Inventory inventory = new Inventory();
 		List<Inventory> inventories = new ArrayList<Inventory>();
 		inventories = inventory.getAll();
+		
 		System.out.println(warehouses);
 		
 		System.out.println(inventories);

@@ -49,31 +49,33 @@ public class WarehousesView {
 					warehouseController = new WarehouseController();
 					List<WarehouseData> warehouses = new ArrayList<WarehouseData>();
 					warehouses = warehouseController.getAll();
-					System.out.println(warehouses);
+					for(int i = 0; i < warehouses.size(); i++) {
+					    System.out.print("Warehouse: "+warehouses.get(i).getIdWarehouse()+" ");
+					    System.out.println("MaxSize: "+warehouses.get(i).getMaxSize());
+					}
 					// Loading Order DB
 					orderData = new OrderData();
 					orderController = new OrderController();
 					List<OrderData> orders = new ArrayList<OrderData>();
 					orders = orderController.getAll();
-					System.out.println(orders);
+
 					// Loading Invoice DB
 					invoiceData = new InvoiceData();
 					invoiceController = new InvoiceController();
 					List<InvoiceData> invoices = new ArrayList<InvoiceData>();
 					invoices = invoiceController.getAll();
-					System.out.println(invoices);
+
 					// Loading Inventory DB
 					inventoryData = new InventoryData();
 					inventoryController = new InventoryController();
 					List<InventoryData> inventories = new ArrayList<InventoryData>();
 					inventories = inventoryController.getAll();
-					System.out.println(inventories);
+				
 					// Loading Consignement DB
 					consignementData = new ConsignementData();
 					consignementController = new ConsignementController();
 					List<ConsignementData> consignements = new ArrayList<ConsignementData>();
 					consignements = consignementController.getAll();
-					System.out.println(consignements);
 					
 					//Generating casual Order
 					TypeProduct typeProduct1 = TypeProduct.values()[(int)(Math.random()*(TypeProduct.values().length))];
@@ -102,7 +104,7 @@ public class WarehousesView {
 						if (inventoryController.searchProduct(typeProduct2.toString(), 1)){
 							warehouseFound2=1;
 							stateConsignement2=StateConsignement.AVAIABLE;
-							System.out.println(inventoryController.searchProductShow(typeProduct2.toString(), 2));
+							System.out.println(inventoryController.searchProductShow(typeProduct2.toString(), 1));
 						}
 						else if(inventoryController.searchProduct(typeProduct2.toString(), 2)){
 							warehouseFound2=2;
@@ -116,6 +118,7 @@ public class WarehousesView {
 					
 						//Creating 2 Consignements 
 						int idConsignement1=consignements.size()+1;
+						System.out.println(idConsignement1+warehouseFound1+typeProduct1.toString()+stateConsignement1.toString());
 						ConsignementData consignementData1=new ConsignementData(idConsignement1,warehouseFound1,typeProduct1.toString(),stateConsignement1.toString());
 						consignementController.newConsignement(consignementData1);
 						System.out.println(consignementController.newConsignementEsit(consignementData1));

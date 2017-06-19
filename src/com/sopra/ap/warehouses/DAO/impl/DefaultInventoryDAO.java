@@ -71,7 +71,7 @@ public class DefaultInventoryDAO implements InventoryDAO {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setString(1, typeProduct.toString());
 			stmt.setInt(2, idWarehouse);
-			stmt.executeUpdate();
+			stmt.executeQuery();
 			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
