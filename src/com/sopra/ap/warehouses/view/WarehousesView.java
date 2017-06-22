@@ -49,6 +49,7 @@ public class WarehousesView {
 		do {
 			System.out.println(menu);
 			choise = scan.nextLine();
+			try{
 			if ((choise.length() == 1) && (Integer.parseInt(choise)==1 || Integer.parseInt(choise)==2)) {
 				switch (Integer.parseInt(choise)) {
 				case 1: {
@@ -71,8 +72,7 @@ public class WarehousesView {
 					// Loading Inventory DB
 					inventoryData = new InventoryData();
 					inventoryController = new InventoryController();
-					List<InventoryData> inventories = new ArrayList<InventoryData>();
-					inventories = inventoryController.getAll();
+					List<InventoryData> inventories = inventoryController.getAll();
 				
 					// Loading Consignement DB
 					consignementData = new ConsignementData();
@@ -206,9 +206,12 @@ public class WarehousesView {
 					System.out.println("Scelta errata!");
 					break;
 				}
-			} else {
+			}
+			}
+			catch(NumberFormatException e){
 				System.out.println("INSERT ERROR!!!\n");
 			}
+			
 		}while(Integer.parseInt(choise)!=2);System.out.println("Arrivederci!");scan.close();
 
 	}
